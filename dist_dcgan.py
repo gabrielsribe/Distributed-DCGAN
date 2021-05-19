@@ -247,7 +247,7 @@ def main():
 
         epoch_end_time = time.time()-epoch_start_time
         elapedsed_time = elapedsed_time + epoch_end_time
-        print(f"Rank, {rank}, Epoch, {epoch}, Epoch time, {epoch_end_time:.4f}, Elapsed time,{elapedsed_time:.4f}}")
+        print(f"Rank, {rank}, Epoch, {epoch}, Epoch time, {epoch_end_time:.4f}, Elapsed time,{elapedsed_time:.4f}")
 
     torch.distributed.destroy_process_group()
 

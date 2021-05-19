@@ -1,4 +1,4 @@
-#Gabriel de Souza Ribeiro #Email: g234836@dac.unicamp.br #RA: 234836 #Report ativ-6-exp-1
+#Gabriel de Souza Ribeiro #Email: g234836@dac.unicamp.br #RA: 234836 #Report ativ-7-exp-1
 
 #Passos para executar a aplicação de maneira distribuida
 
@@ -30,3 +30,17 @@ Agora temos a imagem configura ja com o container construido.
 A partir daqui foi criado um template a partir dessa imagem e foram criadas mais instacias no mesmo Placement Group para melhor performance de rede e VPN (para acesso entre as mesmas)
 
 #Executar a aplicação:
+#Obs não esquecer de configurar o master_addr com o ip da instacia que sera utilizada como master Utilizar o batchsize = 16 para evitar problemas de memória Setar o rank das maquinas, rank = 0 = Master Expor a porta 1234
+
+#Nesse experimento será utilizado 3 maquinas (1 master e 2 workers, rank 0, 1 e 2)
+
+Em cada maquina executar o comando:
+
+#Comando nó master
+sudo docker run --env --rm --network=host -p 1234:1234 -v=$(pwd):/root dist_dcgan:latest python -m torch.distributed.launch --nproc_per_node=2 --nnodes=3 --node_rank=0 --master_addr="172.31.77.37" --master_port=1234 dist_dcgan.py --dataset cifar10 --dataroot ./cifar10 --num_epochs 1 --batch_size 16 --max_workers 2
+
+#Comando nó 1
+sudo docker run --env --rm --network=host -p 1234:1234 -v=$(pwd):/root dist_dcgan:latest python -m torch.distributed.launch --nproc_per_node=2 --nnodes=3 --node_rank=1 --master_addr="172.31.77.37" --master_port=1234 dist_dcgan.py --dataset cifar10 --dataroot ./cifar10 --num_epochs 1 --batch_size 16 --max_workers 2
+
+#Comando nó 2
+sudo docker run --env --rm --network=host -p 1234:1234 -v=$(pwd):/root dist_dcgan:latest python -m torch.distributed.launch --nproc_per_node=2 --nnodes=3 --node_rank=2 --master_addr="172.31.77.37" --master_port=1234 dist_dcgan.py --dataset cifar10 --dataroot ./cifar10 --num_epochs 1 --batch_size 16 --max_workers 2

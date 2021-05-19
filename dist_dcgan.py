@@ -190,6 +190,7 @@ def main():
 
     initialization_time = time.time() - start_time
     print(f"Rank,{rank},Initialization Time: {initialization_time:.4f}")
+    elapedsed_time = time.time() - time.time()
 
     for epoch in range(argv.num_epochs):
         epoch_start_time = time.time()

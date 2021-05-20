@@ -34,7 +34,5 @@ A partir daqui foi criado um template a partir dessa imagem e foram criadas mais
 
 #Nesse experimento será utilizado 1 maquina
 
-Em cada maquina executar o comando:
-
 #Comando nó master
-sudo docker run --env --rm --network=host -p 1234:1234 -v=$(pwd):/root dist_dcgan:latest python -m torch.distributed.launch --nproc_per_node=2 --nnodes=1 --node_rank=0 dist_dcgan.py --dataset cifar10 --dataroot ./cifar10 --num_epochs 1 --batch_size 16 --max_workers 2
+sudo docker run --env --rm --network=host -p 1234:1234 -v=$(pwd):/root dist_dcgan:latest python -m torch.distributed.launch --nproc_per_node=2 --nnodes=1 --node_rank=0 --master_addr="172.17.0.1" --master_port=1234 dist_dcgan.py --dataset cifar10 --dataroot ./cifar10 --num_epochs 1 --batch_size 16 --max_workers 2

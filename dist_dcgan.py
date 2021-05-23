@@ -245,6 +245,9 @@ def main():
                 fake = netG(fixed_noise)
                 vutils.save_image(fake.detach(), f'{argv.out_folder}/fake_samples_rank_{rank}_epoch_{epoch}_iter_{i}.png', normalize=True)
                 torch.distributed.barrier()
+        
+        if i == 20:
+            break
 
         epoch_end_time = time.time()-epoch_start_time
         elapedsed_time = elapedsed_time + epoch_end_time

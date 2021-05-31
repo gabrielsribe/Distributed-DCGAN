@@ -23,8 +23,11 @@ Para a validação do experimento serão utilizados três cenários:
 -> cluster-t2.small-2x: Um cluster com duas máquinas t2.small.
 -> cluster-t2.small-4x: Um cluster com quatro máquinas t2.small.
 
+É importante ressaltar que foi limitado o numero de Paramount iterations foi limitada a 20, para otimizar o tempo gasto no experimento
 
 
 ## Rodando o experimento
 
 
+
+# Resultados

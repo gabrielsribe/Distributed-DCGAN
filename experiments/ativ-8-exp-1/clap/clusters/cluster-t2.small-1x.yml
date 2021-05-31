@@ -1,0 +1,19 @@
+setups:
+  setup-initial:
+    roles:
+    - name: gan
+
+    actions:
+    - role: gan
+      action: setup
+
+
+clusters:
+  cluster-t2.small-1x:
+  
+    nodes:
+      master:
+        type: type-gan-small
+        count: 1
+        setups:
+        - setup-initial

@@ -1,0 +1,13 @@
+---
+actions:
+  setup:
+    playbook: roles/gan/setup.yml
+    description: Setup GAN in nodes
+
+  run:
+    playbook: roles/gan/run.yml
+    description: Run GAN in nodes
+
+  fetch-result:
+    playbook: roles/gan/fetch-result.yml
+    description: Run GAN in nodes

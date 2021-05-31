@@ -1,0 +1,42 @@
+---
+- name: setup-test
+  hosts: all
+  gather_facts: yes
+  tasks:
+  - name: Perform Ubuntu package update
+    become: yes
+    apt:
+      update_cache: yes
+  - name: Install dependencies
+    become: yes
+    package:
+      name: 
+      - git
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - gnupg
+      - lsb-release
+  - name: Set docker key
+    become: yes
+    shell: "{{ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg }}"
+    args:
+      chdir: "{{ workdir | default('') }}"
+  - name: Set docker stable repo
+    become: yes
+    shell: "{{ echo \
+  "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null }}"
+    args:
+      chdir: "{{ workdir | default('') }}"
+  - name: Perform Ubuntu package update after setup docker
+    become: yes
+    apt:
+      update_cache: yes
+  - name: Install docker
+    become: yes
+    package:
+      name: 
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
